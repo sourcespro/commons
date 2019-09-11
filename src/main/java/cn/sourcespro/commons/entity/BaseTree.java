@@ -1,24 +1,27 @@
 package cn.sourcespro.commons.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * 左右值结构基类
  *
  * @author zhanghaowei
- * @date 2018/10/31
+ * @since 2018/10/31
  */
-public class BaseTree {
+public class BaseTree<ID extends Serializable, T> {
 
     /**
      * id
      */
-    private Integer id;
+    private ID id;
 
     /**
      * 父id
      */
-    private Integer pid;
+    private ID pid;
 
     /**
      * 左值
@@ -45,21 +48,22 @@ public class BaseTree {
      */
     private Boolean leaf;
 
-    private List<?> children;
+    @TableField(exist = false)
+    private List<T> children;
 
-    public Integer getId() {
+    public ID getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(ID id) {
         this.id = id;
     }
 
-    public Integer getPid() {
+    public ID getPid() {
         return pid;
     }
 
-    public void setPid(Integer pid) {
+    public void setPid(ID pid) {
         this.pid = pid;
     }
 
@@ -103,11 +107,11 @@ public class BaseTree {
         this.leaf = leaf;
     }
 
-    public List<?> getChildren() {
+    public List<T> getChildren() {
         return children;
     }
 
-    public void setChildren(List<?> children) {
+    public void setChildren(List<T> children) {
         this.children = children;
     }
 }

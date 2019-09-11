@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
  * page-dto
  *
  * @author zhanghaowei
- * @date 2018/9/4
+ * @since 2018/9/4
  */
 public class PageDto {
 
@@ -20,9 +20,14 @@ public class PageDto {
      */
     private long pageSize = 10;
 
-    private String orderColumn;
-
-    private String orderSort;
+    /**
+     * 排序列名
+     */
+    private String field;
+    /**
+     * 排序方法 asc desc
+     */
+    private String order;
 
     public Page getPage(){
         Page page = new Page();
@@ -47,19 +52,19 @@ public class PageDto {
         this.pageSize = pageSize;
     }
 
-    public String getOrderColumn() {
-        return orderColumn;
+    public String getField() {
+        return field;
     }
 
-    public void setOrderColumn(String orderColumn) {
-        this.orderColumn = orderColumn;
+    public void setField(String field) {
+        this.field = field;
     }
 
-    public String getOrderSort() {
-        return orderSort;
+    public String getOrder() {
+        return order;
     }
 
-    public void setOrderSort(String orderSort) {
-        this.orderSort = orderSort;
+    public void setOrder(String order) {
+        this.order = order;
     }
 }

@@ -1,11 +1,16 @@
 plugins {
     id 'java'
+    id 'maven-publish'
+    id 'signing'
 }
 
-group 'cn.sourcespro'
-version '0.0.1'
+group = 'cn.sourcespro'
+version = '0.0.3'
 
 sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+jar.baseName = 'commons-spring-boot-starter'
 
 repositories {
     mavenCentral()
@@ -15,4 +20,72 @@ dependencies {
     compile 'com.baomidou:mybatis-plus-boot-starter:3.0.1'
     compile "org.springframework.boot:spring-boot-starter-web:1.5.4.RELEASE"
     compile "org.springframework.boot:spring-boot-starter-aop:1.5.4.RELEASE"
+}
+
+//发布maven center
+//example: https://docs.gradle.org/current/userguide/publishing_maven.html
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allJava
+    classifier = 'sources'
+}
+
+task javadocJar(type: Jar) {
+    from javadoc
+    classifier = 'javadoc'
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = project.name
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+            pom {
+                name = 'commons-spring-boot-starter'
+                description = 'A project commons lib'
+                url = 'https://github.com/sourcespro/commons'
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'zhanghw'
+                        name = 'zhang haowei'
+                        email = '66963858@qq.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:https://github.com/sourcespro/commons.git'
+                    developerConnection = 'scm:git:https://github.com/sourcespro/commons.git'
+                    url = 'https://github.com/sourcespro/commons'
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            //指定要上传的maven仓库
+            //url = "https://oss.sonatype.org/content/repositories/snapshots/"
+            url = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+            //认证用户和密码
+            credentials {
+                username 'zhanghaowei'
+                password 'Zhw5290083///'
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications.mavenJava
+}
+
+javadoc {
+    if(JavaVersion.current().isJava9Compatible()) {
+        options.addBooleanOption('html4', true)
+    }
 }

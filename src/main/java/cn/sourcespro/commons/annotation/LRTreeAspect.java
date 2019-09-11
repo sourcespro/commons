@@ -17,16 +17,16 @@ import java.util.Map;
  * lr-tree
  *
  * @author zhanghaowei
- * @date 2018/7/10
+ * @since 2018/7/10
  */
-@Component
-@Aspect
+//@Component
+//@Aspect
 public class LRTreeAspect {
 
-    @Autowired
+//    @Autowired
     private BaseTreeMapper mapper;
 
-    @Around("@annotation(add)")
+//    @Around("@annotation(add)")
     public Object around(ProceedingJoinPoint point, LRTreeAdd add){
         Object[] args = new Object[0];
         try {
@@ -96,7 +96,7 @@ public class LRTreeAspect {
         return args;
     }
 
-    @Around("@annotation(delete)")
+//    @Around("@annotation(delete)")
     public Object around2(ProceedingJoinPoint point, LRTreeDelete delete){
         Object[] args = new Object[0];
         try {

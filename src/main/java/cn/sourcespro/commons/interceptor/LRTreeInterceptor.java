@@ -23,7 +23,7 @@ import java.util.Properties;
  * 左右值树拦截器
  *
  * @author zhanghaowei
- * @date 2018/10/31
+ * @since 2018/10/31
  */
 @Intercepts({
         @Signature(type = Executor.class, method = "update", args = {MappedStatement.class, Object.class})

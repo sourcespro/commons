@@ -1,8 +1,5 @@
 package cn.sourcespro.commons.service;
 
-import org.springframework.stereotype.Component;
-
-@Component("idWoker")
 public class IdWoker {
 
 
@@ -35,15 +32,11 @@ public class IdWoker {
 
     private long sequence = 0L;
 
-    private IdWoker() {
-
-    }
-
 
     /**
      * 下一个ID
      *
-     * @return
+     * @return long
      */
     public synchronized long nextId() {
         long timestamp = timeGen();
@@ -77,7 +70,7 @@ public class IdWoker {
     /**
      * 下一个ID
      *
-     * @return
+     * @return String
      */
     public synchronized String nextStringId() {
         return String.valueOf(nextId());

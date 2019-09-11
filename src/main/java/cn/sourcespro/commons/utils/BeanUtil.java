@@ -10,20 +10,20 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
 /**
- * 实体类复制，忽略null & ""
+ * <p>实体类复制，忽略null, ""</p>
  * 用于更新数据
  * @author zhanghaowei
- * @date 2018/5/15
+ * @since 2018/5/15
  */
 public class BeanUtil extends org.springframework.beans.BeanUtils {
 
     /**
-     * 实体类复制，忽略null & ""
+     * <p>实体类复制，忽略null, ""</p>
      * @param source
      *      待复制
      * @param target
      *      目标
-     * @throws BeansException
+     * @throws BeansException ccccc
      */
     public static void copyProperties(Object source, Object target) throws BeansException {
         Assert.notNull(source, "Source must not be null");

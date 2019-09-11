@@ -1,28 +1,26 @@
 package cn.sourcespro.commons.data.vo;
 
+import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 
-public class NodeVo {
+public class NodeVo<ID extends Serializable> {
 
-    private Long id;
+    private ID id;
 
     private String name;
 
-    private String label;
+    private Boolean leaf;
 
-    private Boolean spread;
+    private Integer level;
 
-    private Boolean isLeaf;
+    private List<NodeVo> children = Collections.emptyList();
 
-    private Integer code;
-
-    private List<NodeVo> children = null;
-
-    public Long getId() {
+    public ID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(ID id) {
         this.id = id;
     }
 
@@ -34,36 +32,20 @@ public class NodeVo {
         this.name = name;
     }
 
-    public String getLabel() {
-        return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
-    }
-
-    public Boolean getSpread() {
-        return spread;
-    }
-
-    public void setSpread(Boolean spread) {
-        this.spread = spread;
-    }
-
     public Boolean getLeaf() {
-        return isLeaf;
+        return leaf;
     }
 
     public void setLeaf(Boolean leaf) {
-        isLeaf = leaf;
+        this.leaf = leaf;
     }
 
-    public Integer getCode() {
-        return code;
+    public Integer getLevel() {
+        return level;
     }
 
-    public void setCode(Integer code) {
-        this.code = code;
+    public void setLevel(Integer level) {
+        this.level = level;
     }
 
     public List<NodeVo> getChildren() {

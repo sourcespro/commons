@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
  * spring util
  *
  * @author zhanghaowei
- * @date 2018/11/7
+ * @since 2018/11/7
  */
 @Component
 public class SpringUtil implements ApplicationContextAware {
@@ -25,6 +25,7 @@ public class SpringUtil implements ApplicationContextAware {
 
     /**
      * 获取applicationContext
+     * @return app
      */
     public static ApplicationContext getApplicationContext() {
         return applicationContext;
@@ -32,6 +33,8 @@ public class SpringUtil implements ApplicationContextAware {
 
     /**
      * 通过name获取 Bean.
+     * @param name name
+     * @return obj
      */
     public static Object getBean(String name){
         return getApplicationContext().getBean(name);
@@ -39,6 +42,9 @@ public class SpringUtil implements ApplicationContextAware {
 
     /**
      * 通过class获取 Bean.
+     * @param clazz c
+     * @param <T> ddd
+     * @return t ccc
      */
     public static <T> T getBean(Class<T> clazz){
         return getApplicationContext().getBean(clazz);
@@ -46,6 +52,10 @@ public class SpringUtil implements ApplicationContextAware {
 
     /**
      * 通过name,以及Clazz返回指定的Bean
+     * @param clazz c
+     * @param name name
+     * @param <T> name
+     * @return t ccc
      */
     public static <T> T getBean(String name,Class<T> clazz){
         return getApplicationContext().getBean(name, clazz);
