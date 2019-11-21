@@ -13,13 +13,15 @@ targetCompatibility = 1.8
 jar.baseName = 'commons-spring-boot-starter'
 
 repositories {
+    maven { url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+    mavenLocal()
     mavenCentral()
 }
 
 dependencies {
-    compile 'com.baomidou:mybatis-plus-boot-starter:3.0.1'
-    compile "org.springframework.boot:spring-boot-starter-web:1.5.4.RELEASE"
-    compile "org.springframework.boot:spring-boot-starter-aop:1.5.4.RELEASE"
+    implementation 'com.baomidou:mybatis-plus-boot-starter:3.2.0'
+    implementation "org.springframework.boot:spring-boot-starter-web:1.5.4.RELEASE"
+    implementation "org.springframework.boot:spring-boot-starter-aop:1.5.4.RELEASE"
 }
 
 //发布maven center
