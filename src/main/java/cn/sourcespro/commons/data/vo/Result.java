@@ -1,5 +1,6 @@
 package cn.sourcespro.commons.data.vo;
 
+import cn.sourcespro.commons.utils.MessageUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 
 import java.util.List;
@@ -7,11 +8,13 @@ import java.util.List;
 public class Result {
 
     public static Vo paramError(String errMsg){
-        return new Vo(400, errMsg);
+        String msg = MessageUtil.get(errMsg);
+        return new Vo(400, msg != null ? msg : errMsg);
     }
 
     public static Vo systemError(String errMsg){
-        return new Vo(500, errMsg);
+        String msg = MessageUtil.get(errMsg);
+        return new Vo(500, msg != null ? msg : errMsg);
     }
 
     public static Vo ok(){

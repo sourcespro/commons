@@ -38,7 +38,7 @@ public class LRTreeInterceptor implements Interceptor {
     public Object intercept(Invocation invocation) throws Throwable {
         if (treeMapper == null) {
             this.treeMapper = SpringUtil.getBean(BaseTreeMapper.class);
-            logger.info("获取base tree mapper：{}", treeMapper);
+            logger.debug("获取base tree mapper：{}", treeMapper);
         }
         MappedStatement mappedStatement = (MappedStatement) invocation.getArgs()[0];
         String mappedStatementId = mappedStatement.getId();
@@ -54,9 +54,9 @@ public class LRTreeInterceptor implements Interceptor {
 
         if ("update".equals(methodName)) {
             if (object instanceof BaseTree) {
-                logger.info("左右值树结构，进行拦截更新相关值");
+                logger.debug("左右值树结构，进行拦截更新相关值");
                 if (SqlCommandType.INSERT.equals(sqlCommandType)) {
-                    logger.info("插入语句，执行左右值拦截方法");
+                    logger.debug("插入语句，执行左右值拦截方法");
                     Field pidField = object.getClass().getSuperclass().getDeclaredField("pid");
                     Field lftField = object.getClass().getSuperclass().getDeclaredField("lft");
                     Field rgtField = object.getClass().getSuperclass().getDeclaredField("rgt");
@@ -138,7 +138,7 @@ public class LRTreeInterceptor implements Interceptor {
                 for (Method method : classType.getDeclaredMethods()) {
                     if (method.isAnnotationPresent(LRTreeDelete.class) && method.getName().equals(mName)) {
                         //方法包含自定义注解 @LRTreeDelete
-                        logger.info("逻辑删除语句：{}，执行左右值拦截方法", mappedStatementId);
+                        logger.debug("逻辑删除语句：{}，执行左右值拦截方法", mappedStatementId);
                         Map<String, Object> preDelObj;
                         if (object instanceof Long) {
                             preDelObj = treeMapper.findById(tableName, (Long) object);
