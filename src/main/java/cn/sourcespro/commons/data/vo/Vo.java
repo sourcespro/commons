@@ -8,7 +8,7 @@ package cn.sourcespro.commons.data.vo;
  */
 public class Vo {
 
-    private int code = 0;
+    private int code = 200;
 
     private String msg = "success";
 

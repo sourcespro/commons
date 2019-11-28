@@ -1,10 +1,13 @@
 package cn.sourcespro.commons.data.dto;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * pageInfo
+ * @author zhang
  */
+@JsonIgnoreProperties(value = {"size", "current", "orders", "searchCount"})
 public class PageInfo<T> extends Page {
 
     /**
@@ -16,6 +19,16 @@ public class PageInfo<T> extends Page {
      * pageSize
      */
     private long pageSize = 10;
+
+    /**
+     * 是否存在上一页
+     */
+    private boolean hasPrevious;
+
+    /**
+     * 是否存在下一页
+     */
+    private boolean hasNext;
 
     /**
      * 排序列名
@@ -72,5 +85,32 @@ public class PageInfo<T> extends Page {
 
     public void setCondition(T condition) {
         this.condition = condition;
+    }
+
+    public boolean isHasPrevious() {
+        return super.hasPrevious();
+    }
+
+    public void setHasPrevious(boolean hasPrevious) {
+        this.hasPrevious = hasPrevious;
+    }
+
+    public boolean isHasNext() {
+        return super.hasNext();
+    }
+
+    public void setHasNext(boolean hasNext) {
+        this.hasNext = hasNext;
+    }
+
+    @Override
+    public String toString() {
+        return "PageInfo{" +
+                "pageNo=" + pageNo +
+                ", pageSize=" + pageSize +
+                ", field='" + field + '\'' +
+                ", order='" + order + '\'' +
+                ", condition=" + (condition != null ? condition.toString() : "{}") +
+                "} ";
     }
 }

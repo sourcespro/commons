@@ -1,5 +1,6 @@
 package cn.sourcespro.commons.data.vo;
 
+import cn.sourcespro.commons.data.dto.PageInfo;
 import cn.sourcespro.commons.utils.MessageUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 
@@ -41,5 +42,9 @@ public class Result {
 
     public static <T> PageVo<T> page(IPage<T> iPage){
         return new PageVo<>(iPage.getTotal(), iPage.getRecords());
+    }
+
+    public static <T> PageInfoVo pageInfo(PageInfo<T> pageInfo){
+        return new PageInfoVo(pageInfo);
     }
 }

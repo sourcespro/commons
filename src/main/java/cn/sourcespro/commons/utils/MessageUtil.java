@@ -10,6 +10,7 @@ import java.util.List;
 
 /**
  * 国际化工具类
+ * @author zhang
  */
 @Component
 public class MessageUtil {
@@ -24,6 +25,8 @@ public class MessageUtil {
 
     /**
      * 获取单个国际化翻译值
+     * @param msgKey msgKey
+     * @return msg
      */
     public static String get(String msgKey) {
         try {
@@ -37,6 +40,9 @@ public class MessageUtil {
     /**
      * 获取单个国际化翻译值
      * 带参数list
+     * @param msgKey msgKey
+     * @param args args
+     * @return msg
      */
     public static String get(String msgKey, List<Object> args) {
         try {
@@ -50,6 +56,9 @@ public class MessageUtil {
     /**
      * 获取单个国际化翻译值
      * 带参数string
+     * @param msgKey msgKey
+     * @param args0 args0
+     * @return msg
      */
     public static String get(String msgKey, String args0) {
         try {
