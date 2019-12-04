@@ -72,16 +72,18 @@ public class LRTreeInterceptor implements Interceptor {
                     levelField.setAccessible(true);
 
                     Object pidObj = pidField.get(object);
-                    Long pid;
+                    String pid;
                     if (pidObj instanceof Integer) {
-                        pid = Long.valueOf((Integer)pidObj);
+                        pid = String.valueOf(pidObj);
                     } else if (pidObj instanceof Long){
-                        pid = (Long)pidObj;
+                        pid = String.valueOf(pidObj);
+                    } else if (pidObj instanceof String){
+                        pid = (String) pidObj;
                     } else {
-                        throw new IllegalArgumentException("左右值树仅支持id类型为Integer和Long类型");
+                        throw new IllegalArgumentException("左右值树仅支持id类型为Integer、Long和String类型，当前为null");
                     }
                     //如果是第一层：
-                    if (pid == 0) {
+                    if (pid == null || "".equals(pid) || "0".equals(pid)) {
                         //查询第一层最大的右值  maxRight
                         int maxLv1Val = treeMapper.maxLv1Val(tableName);
 
@@ -93,14 +95,14 @@ public class LRTreeInterceptor implements Interceptor {
                         levelField.set(object, 0);
 
                     }
-                    // 如果非第一层：pId != 0
+                    // 如果非第一层：pId != null、""、0
                     else {
                         //更新父节点为非叶子节点
                         treeMapper.updateParentNotLeaf(tableName, pid);
 
                         Map<String, Object> parent = treeMapper.findById(tableName, pid);
 
-                        Long refId = (Long) parent.get("id");
+                        String refId = (String) parent.get("id");
                         Integer refLft = (Integer) parent.get("lft");
                         Integer refRgt = (Integer) parent.get("rgt");
                         Integer refLevel = (Integer) parent.get("level");
@@ -141,17 +143,20 @@ public class LRTreeInterceptor implements Interceptor {
                         logger.debug("逻辑删除语句：{}，执行左右值拦截方法", mappedStatementId);
                         Map<String, Object> preDelObj;
                         if (object instanceof Long) {
-                            preDelObj = treeMapper.findById(tableName, (Long) object);
+                            preDelObj = treeMapper.findById(tableName, String.valueOf(object));
                         } else if (object instanceof Integer) {
-                            preDelObj = treeMapper.findById(tableName, Long.valueOf((Integer)object));
+                            preDelObj = treeMapper.findById(tableName, String.valueOf(object));
                         } else if (object instanceof String) {
-                            preDelObj = treeMapper.findByUuid(tableName, String.valueOf(object));
+                            preDelObj = treeMapper.findById(tableName, String.valueOf(object));
+                            if (preDelObj == null) {
+                                preDelObj = treeMapper.findByUuid(tableName, String.valueOf(object));
+                            }
                         } else {
-                            throw new IllegalArgumentException("左右值树仅支持id类型为Integer、Long、String（uuid）类型");
+                            throw new IllegalArgumentException("左右值树仅支持id类型为Integer、Long和String类型，当前为" + object);
                         }
                         if (preDelObj != null) {
-                            Long id = (Long) preDelObj.get("id");
-                            Long pid = (Long) preDelObj.get("pid");
+                            String id = (String) preDelObj.get("id");
+                            String pid = (String) preDelObj.get("pid");
                             Integer lft = (Integer) preDelObj.get("lft");
                             Integer rgt = (Integer) preDelObj.get("rgt");
                             List<Integer> childIds = treeMapper.findChildIds(tableName, lft, rgt);

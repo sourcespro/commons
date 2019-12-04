@@ -57,7 +57,7 @@ public class LRTreeAspect {
             }
             // 如果非第一层：pId！=0
             else {
-                Map<String, Object> parent = mapper.findById(tableName, Long.valueOf(pid));
+                Map<String, Object> parent = mapper.findById(tableName, String.valueOf(pid));
 
                 Integer refId = (Integer) parent.get("id");
                 Integer refLft = (Integer) parent.get("lft");
@@ -105,7 +105,7 @@ public class LRTreeAspect {
             Map<String, Object> tree;
             if (args[0] instanceof Integer) {
                 Integer id = (Integer) args[0];
-                tree = mapper.findById(tableName, Long.valueOf(id));
+                tree = mapper.findById(tableName, String.valueOf(id));
             } else {
                 String uuid = (String) args[0];
                 tree = mapper.findByUuid(tableName, uuid);
@@ -121,11 +121,11 @@ public class LRTreeAspect {
                     mapper.updateLftSubVal(tableName, rgt, 2);
                     mapper.updateRgtSubVal(tableName, rgt, 2);
                 } else {
-                    Map<String, Object> parent = mapper.findById(tableName, Long.valueOf(pid));
+                    Map<String, Object> parent = mapper.findById(tableName, String.valueOf(pid));
                     Integer parentLft = (Integer) parent.get("lft");
                     Integer parentRgt = (Integer) parent.get("rgt");
                     Integer parentLevel = (Integer) parent.get("level");
-                    Integer minBrotherLftVal = mapper.minBrotherLftVal(tableName, parentLevel, parentLft, parentRgt, Long.valueOf(id));
+                    Integer minBrotherLftVal = mapper.minBrotherLftVal(tableName, parentLevel, parentLft, parentRgt, String.valueOf(id));
                     if (minBrotherLftVal == null || minBrotherLftVal == 0) {
                         //2、有子节点 && 没有兄弟节点
                         mapper.updateLftSubVal(tableName, rgt, parentRgt - lft);

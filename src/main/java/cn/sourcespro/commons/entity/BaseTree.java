@@ -1,6 +1,7 @@
 package cn.sourcespro.commons.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 
 import java.io.Serializable;
 import java.util.List;
@@ -16,6 +17,7 @@ public class BaseTree<ID extends Serializable, T> {
     /**
      * id
      */
+    @TableId
     private ID id;
 
     /**

@@ -31,7 +31,7 @@ public interface BaseTreeMapper {
                              @Param("level") Integer level,
                              @Param("lft") Integer lft,
                              @Param("rgt") Integer rgt,
-                             @Param("id") Long id);
+                             @Param("id") String id);
 
     @Update("UPDATE ${table} SET lft = lft + 2 WHERE lft > #{minVal};")
     int updateLftVal(@Param("table") String table,
@@ -43,7 +43,7 @@ public interface BaseTreeMapper {
 
     @Select("SELECT * FROM ${table} where id = #{id};")
     Map<String, Object> findById(@Param("table") String table,
-                                 @Param("id") Long id);
+                                 @Param("id") String id);
 
     @Select("SELECT * FROM ${table} where uuid = #{uuid};")
     Map<String,Object> findByUuid(@Param("table") String table,
@@ -61,7 +61,7 @@ public interface BaseTreeMapper {
 
     @Update("UPDATE ${table} SET leaf = false WHERE id = #{id};")
     int updateParentNotLeaf(@Param("table") String table,
-                            @Param("id") Long id);
+                            @Param("id") String id);
 
     @Select("SELECT id FROM ${table} WHERE lft > ${lft} and rgt < #{rgt};")
     List<Integer> findChildIds(@Param("table") String table,

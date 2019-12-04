@@ -12,7 +12,6 @@ import java.util.List;
  * 国际化工具类
  * @author zhang
  */
-@Component
 public class MessageUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(MessageUtil.class);
