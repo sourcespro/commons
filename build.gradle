@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'cn.sourcespro'
-version = '0.0.5'
+version = '0.0.7'
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
@@ -76,8 +76,7 @@ publishing {
             url = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
             //认证用户和密码
             credentials {
-                username 'xxxxxx'
-                password 'xxxxxx'
+
             }
         }
     }

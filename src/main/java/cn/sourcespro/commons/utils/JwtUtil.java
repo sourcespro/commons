@@ -44,6 +44,36 @@ public class JwtUtil {
 
     /**
      * 生成token
+     * @param key key
+     * @param value value
+     * @param maxAge 有效时长ms
+     * @return token
+     */
+    public static String create(String key, String value, long maxAge) {
+        if (key == null || value == null) {
+            logger.info("参数key={},value={}不能为空", key, value);
+            return null;
+        }
+        try {
+            //使用HS256算法
+            Algorithm algorithm = Algorithm.HMAC256(SECRET);
+            //通过调用 JWT.create()来创建 jwt实例
+            JWTCreator.Builder builder = JWT.create()
+                    .withIssuer(ISSUER)
+                    //设置过期时间
+                    .withExpiresAt(new Date(System.currentTimeMillis() + maxAge));
+            //索赔:添加自定义声明值,完成荷载的信息
+            builder.withClaim(key, value);
+            //签署:调用sign()传递算法实例
+            return builder.sign(algorithm);
+        } catch (JWTCreationException e) {
+            logger.error("无效的签名配置", e);
+        }
+        return null;
+    }
+
+    /**
+     * 生成token
      * @param claims 参数
      * @param maxAge 有效时长ms
      * @return token
@@ -73,6 +103,10 @@ public class JwtUtil {
      * @return 令牌中定义的声明
      */
     public static Map<String, String> verify(String token) {
+        if (token == null) {
+            logger.info("参数token={}不能为空", token);
+            return null;
+        }
         try {
             //使用HS256算法
             Algorithm algorithm = Algorithm.HMAC256(SECRET);
@@ -85,6 +119,39 @@ public class JwtUtil {
             Map<String, String> resultMap = new HashMap<>(map.size());
             map.forEach((k, v) -> resultMap.put(k, v.asString()));
             return resultMap;
+        } catch (JWTVerificationException e) {
+            logger.error("校验失败或token已过期!", e);
+        }
+        return null;
+    }
+
+    /**
+     * 验证token，并返回数据
+     * @param token token
+     * @param key key
+     * @return 令牌中定义的声明
+     */
+    public static String verify(String token, String key) {
+        if (token == null || key == null) {
+            logger.info("参数token={}，key={}不能为空", token, key);
+            return null;
+        }
+        try {
+            //使用HS256算法
+            Algorithm algorithm = Algorithm.HMAC256(SECRET);
+            //验证令牌的签名
+            JWTVerifier verifier = JWT.require(algorithm).withIssuer(ISSUER).build();
+            //针对给定令牌执行验证
+            DecodedJWT jwt = verifier.verify(token);
+            //获取令牌中定义的声明
+            Map<String, Claim> map = jwt.getClaims();
+            Map<String, String> resultMap = new HashMap<>(map.size());
+            for (Map.Entry<String, Claim> entry : map.entrySet()) {
+                String k = entry.getKey();
+                if (key.equals(k)) {
+                    return entry.getValue().asString();
+                }
+            }
         } catch (JWTVerificationException e) {
             logger.error("校验失败或token已过期!", e);
         }
